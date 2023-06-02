@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const { Users } = require('../models');
 const nodemailer = require('../utils/nodemailer');
+const oauth2 = require('../utils/oauth');
 const { JWT_SECRET_KEY } = process.env;
 
 module.exports = {
@@ -207,6 +208,46 @@ module.exports = {
                 status: true,
                 message: 'Reset password success!',
                 data: null,
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    loginGoogle: async (req, res) => {
+        try {
+            const { code } = req.query;
+            if (!code) {
+                const googleLoginUrl = oauth2.generateAuthUrl();
+                return res.redirect(googleLoginUrl);
+            }
+
+            await oauth2.setCreadentials(code);
+            const { data } = await oauth2.getUserData();
+
+            let user = await Users.findOne({ where: { email: data.email } });
+            if (!user) {
+                user = await Users.create({
+                    name: data.name,
+                    email: data.email,
+                    is_google: true,
+                    is_active: true,
+                });
+            }
+
+            const payload = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            };
+
+            const token = await jwt.sign(payload, JWT_SECRET_KEY);
+            return res.status(200).json({
+                status: true,
+                message: 'login success!',
+                data: {
+                    token: token,
+                },
             });
         } catch (error) {
             throw error;

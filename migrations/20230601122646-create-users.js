@@ -18,13 +18,30 @@ module.exports = {
             password: {
                 type: Sequelize.STRING,
             },
+            role: {
+                type: Sequelize.STRING,
+                defaultValue: 'user',
+            },
+            is_google: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+            },
+            is_active: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+            },
+            activation_code: {
+                type: Sequelize.STRING,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
+                defaultValue: Sequelize.literal('NOW()'),
             },
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
+                defaultValue: Sequelize.literal('NOW()'),
             },
         });
     },
