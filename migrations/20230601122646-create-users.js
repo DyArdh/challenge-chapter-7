@@ -30,9 +30,6 @@ module.exports = {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
             },
-            activation_code: {
-                type: Sequelize.STRING,
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

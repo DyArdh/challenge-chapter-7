@@ -53,6 +53,9 @@ dependencies:
   pg:
     specifier: ^8.10.0
     version: 8.11.0
+  randomstring:
+    specifier: ^1.2.3
+    version: 1.2.3
   sequelize:
     specifier: ^6.31.0
     version: 6.31.1(pg@8.11.0)
@@ -928,6 +931,11 @@ packages:
 
   /array-flatten@1.1.1:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
+    dev: false
+
+  /array-uniq@1.0.2:
+    resolution: {integrity: sha512-GVYjmpL05al4dNlKJm53mKE4w9OOLiuVHWorsIA3YVz+Hu0hcn6PtE3Ydl0EqU7v+7ABC4mjjWsnLUxbpno+CA==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /arrify@2.0.1:
@@ -3287,6 +3295,18 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4
+    dev: false
+
+  /randombytes@2.0.3:
+    resolution: {integrity: sha512-lDVjxQQFoCG1jcrP06LNo2lbWp4QTShEXnhActFBwYuHprllQV6VUpwreApsYqCgD+N1mHoqJ/BI/4eV4R2GYg==}
+    dev: false
+
+  /randomstring@1.2.3:
+    resolution: {integrity: sha512-3dEFySepTzp2CvH6W/ASYGguPPveBuz5MpZ7MuoUkoVehmyNl9+F9c9GFVrz2QPbM9NXTIHGcmJDY/3j4677kQ==}
+    hasBin: true
+    dependencies:
+      array-uniq: 1.0.2
+      randombytes: 2.0.3
     dev: false
 
   /range-parser@1.2.1:

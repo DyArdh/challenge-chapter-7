@@ -6,7 +6,18 @@ module.exports = {
     getUser: async (req, res) => {
         try {
             const { id } = req.user;
-            const user = await Users.findOne({ where: { id } });
+            const user = await Users.findOne({
+                include: [
+                    {
+                        model: ProfileImages,
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt'],
+                        },
+                    },
+                ],
+                attributes: ['id', 'name', 'email'],
+                where: { id },
+            });
 
             return res.status(200).json({
                 status: true,
@@ -54,14 +65,51 @@ module.exports = {
                 }
             });
 
-            await ProfileImages.update(
-                { file_id: uploadFile.fileId, url: uploadFile.url },
-                { where: { user_id: id } }
-            );
+            await ProfileImages.update({ file_id: uploadFile.fileId, url: uploadFile.url }, { where: { user_id: id } });
 
             return res.status(201).json({
                 status: true,
                 message: 'Profile image is uploaded!',
+                data: null,
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    editProfile: async (req, res) => {
+        try {
+            const { id } = req.user;
+            const { name, email, password, confirm_password } = req.body;
+            const user = await Users.findOne({ where: { id } });
+
+            if (password != confirm_password) {
+                return res.status(400).json({
+                    status: false,
+                    message: 'Confirm password does not match!',
+                    data: null,
+                });
+            }
+
+            const updateUser = await Users.update(
+                {
+                    name: name || user.name,
+                    email: email || user.email,
+                    password: password || user.password,
+                },
+                { where: { id } }
+            );
+
+            if (updateUser[0] == 0) {
+                res.status(400).json({
+                    status: false,
+                    message: 'Update profile failed!',
+                    data: null,
+                });
+            }
+            res.status(200).json({
+                status: true,
+                message: 'Update profile success!',
                 data: null,
             });
         } catch (error) {

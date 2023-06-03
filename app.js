@@ -29,6 +29,7 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

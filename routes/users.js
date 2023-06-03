@@ -6,6 +6,7 @@ const multer = require('../middleware/multer');
 const auth = require('../middleware/auth');
 
 router.get('/', auth.auth, users.getUser);
+router.put('/edit', auth.auth, users.editProfile);
 router.post('/upload', auth.auth, multer.image.single('profile_img'), users.uploadProfileImg);
 
 module.exports = router;
