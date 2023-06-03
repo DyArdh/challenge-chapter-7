@@ -304,7 +304,7 @@ module.exports = {
             }
 
             return res.status(200).json({
-                status: false,
+                status: true,
                 message: 'Activation account success!',
                 data: null,
             });
