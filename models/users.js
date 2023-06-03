@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
             role: DataTypes.STRING,
             is_google: DataTypes.BOOLEAN,
             is_active: DataTypes.BOOLEAN,
-            activation_code: DataTypes.STRING,
         },
         {
             sequelize,

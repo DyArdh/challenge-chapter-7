@@ -1,12 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const components = require("../controllers/components");
+const components = require('../controllers/components');
+const auth = require('../middleware/auth');
 
-router.get("/", components.index);
-router.post("/", components.store);
-router.get("/:componentId", components.show);
-router.put("/:componentId", components.update);
-router.delete("/:componentId", components.destroy);
+router.get('/', auth.auth, components.index);
+router.post('/', auth.auth, auth.is_admin, components.store);
+router.get('/:componentId', auth.auth, auth.is_admin, components.show);
+router.put('/:componentId', auth.auth, auth.is_admin, components.update);
+router.delete('/:componentId', auth.auth, auth.is_admin, components.destroy);
 
 module.exports = router;

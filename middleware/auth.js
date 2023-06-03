@@ -7,20 +7,25 @@ module.exports = {
             const { authorization } = req.headers;
 
             if (!authorization) {
-                return res.status(401).json({
-                    status: false,
-                    message: 'Token is invalid!',
-                    data: null,
-                });
+                return res.sendStatus(401);
             }
 
             const data = jwt.verify(authorization, JWT_SECRET_KEY);
             req.user = {
                 id: data.id,
+                role: data.role,
             };
             next();
         } catch (error) {
             throw error;
         }
+    },
+
+    is_admin: async (req, res, next) => {
+        const { role } = req.user;
+        if (role != 'admin') {
+            return res.sendStatus(403);
+        }
+        next();
     },
 };
