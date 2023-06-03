@@ -9,3 +9,8 @@ Link Deploy:
 ### Prod Deployment
 
 [Production Link](https://trite-cow-production.up.railway.app)
+
+
+#### Account Demo
+email: admin@gmail.com
+password: 12345
